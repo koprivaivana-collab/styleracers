@@ -1,3 +1,742 @@
-<!DOCTYPE html>
-<header></header>
-<body></body>
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>E‑shop – úvod</title>
+  <meta name="description" content="Úvodní stránka e‑shopu (HTML+CSS) s daty v JSON a renderem přes JS." />
+  <style>
+    :root{
+      --bg:#0b1220;
+      --surface: rgba(255,255,255,.04);
+      --surface2: rgba(255,255,255,.06);
+      --border: rgba(255,255,255,.10);
+      --text:#eaf0ff;
+      --muted:#a9b6d6;
+      --brand:#6ea8fe;
+      --brand2:#7ee787;
+      --danger:#ff6b6b;
+
+      --radius:16px;
+      --shadow: 0 12px 35px rgba(0,0,0,.35);
+      --max:1120px;
+    }
+
+    *{ box-sizing:border-box; }
+    html, body{ height:100%; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
+      background:
+        radial-gradient(1200px 700px at 20% -10%, rgba(110,168,254,.35), transparent 60%),
+        radial-gradient(900px 600px at 90% 10%, rgba(126,231,135,.25), transparent 55%),
+        var(--bg);
+      color:var(--text);
+    }
+
+    a{ color:inherit; text-decoration:none; }
+    button, input, select{ font:inherit; color:inherit; }
+
+    .container{ max-width:var(--max); margin:0 auto; padding:20px; }
+
+    /* Topbar */
+    .topbar{
+      position:sticky; top:0; z-index:10;
+      backdrop-filter: blur(10px);
+      background: rgba(11,18,32,.70);
+      border-bottom: 1px solid var(--border);
+    }
+    .topbar-inner{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:14px 20px;
+      display:flex;
+      gap:14px;
+      align-items:center;
+      justify-content:space-between;
+      flex-wrap:wrap;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      font-weight:800; letter-spacing:.2px;
+    }
+    .logo{
+      width:36px; height:36px; border-radius:12px;
+      background: linear-gradient(135deg, var(--brand), var(--brand2));
+      box-shadow: var(--shadow);
+    }
+    .nav{ display:flex; gap:10px; align-items:center; color:var(--muted); flex-wrap:wrap; }
+    .nav a{ padding:8px 10px; border-radius:10px; }
+    .nav a:hover{ background: rgba(255,255,255,.06); color: var(--text); }
+
+    .actions{ display:flex; gap:10px; align-items:center; flex:1; justify-content:flex-end; min-width: 280px; }
+    .search{
+      display:flex; align-items:center; gap:10px;
+      padding:10px 12px;
+      border:1px solid var(--border);
+      border-radius:12px;
+      background: var(--surface);
+      flex: 1;
+      min-width: 200px;
+    }
+    .search input{
+      width:100%;
+      border:0; outline:0;
+      background:transparent;
+    }
+
+    .btn{
+      border:1px solid var(--border);
+      background: var(--surface);
+      padding:10px 12px;
+      border-radius:12px;
+      cursor:pointer;
+    }
+    .btn:hover{ background: var(--surface2); }
+    .btn.primary{
+      border-color: rgba(110,168,254,.45);
+      background: linear-gradient(135deg, rgba(110,168,254,.25), rgba(126,231,135,.15));
+    }
+    .btn.danger{
+      border-color: rgba(255,107,107,.45);
+      background: rgba(255,107,107,.10);
+    }
+
+    /* Hero */
+    .hero{ padding:30px 0 10px; }
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.35fr .65fr;
+      gap:16px;
+      align-items:stretch;
+    }
+    .panel{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .hero-main{ padding:26px; }
+    .kicker{ color:var(--muted); font-weight:700; }
+    h1{ margin:10px 0 10px; font-size:40px; line-height:1.1; }
+    .lead{ color:var(--muted); font-size:16px; line-height:1.6; max-width:60ch; }
+    .hero-cta{ display:flex; gap:10px; flex-wrap:wrap; margin-top:16px; }
+
+    .hero-side{ padding:18px; }
+    .badge{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:10px;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background: var(--surface);
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    /* Sections */
+    .section{ padding:18px 0; }
+    .section h2{
+      margin:0 0 12px;
+      font-size:20px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .subtools{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:flex-end;
+    }
+    .select{
+      border:1px solid var(--border);
+      background: var(--surface);
+      padding:10px 12px;
+      border-radius:12px;
+      outline:0;
+    }
+    .hint{ color:var(--muted); font-size:13px; }
+
+    .grid{
+      display:grid;
+      gap:12px;
+      grid-template-columns: repeat(4, 1fr);
+    }
+    .card{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      border-radius: 14px;
+      padding:14px;
+    }
+    .card:hover{ background: rgba(255,255,255,.05); }
+    .thumb{
+      height:130px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background:
+        radial-gradient(150px 80px at 20% 30%, rgba(110,168,254,.35), transparent 60%),
+        radial-gradient(120px 90px at 80% 60%, rgba(126,231,135,.25), transparent 55%),
+        rgba(255,255,255,.04);
+      margin-bottom:10px;
+    }
+    .meta{ display:flex; justify-content:space-between; align-items:flex-start; gap:10px; }
+    .title{ font-weight:800; }
+    .price{ font-weight:900; white-space:nowrap; }
+    .muted{ color:var(--muted); }
+    .small{ font-size:13px; }
+    .tags{ display:flex; gap:6px; flex-wrap:wrap; margin-top:10px; }
+    .tag{
+      font-size:12px;
+      color: var(--muted);
+      border:1px solid var(--border);
+      background: var(--surface);
+      padding:6px 8px;
+      border-radius:999px;
+    }
+    .card-actions{ display:flex; gap:10px; margin-top:12px; }
+    .card-actions .btn{ flex:1; }
+
+    .empty{
+      border:1px dashed var(--border);
+      border-radius:14px;
+      padding:16px;
+      color:var(--muted);
+      background: rgba(255,255,255,.02);
+    }
+
+    /* Cart drawer (simple) */
+    .drawer{
+      position:fixed;
+      right:16px;
+      bottom:16px;
+      width:min(420px, calc(100vw - 32px));
+      max-height: 70vh;
+      overflow:auto;
+      display:none;
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      background: rgba(11,18,32,.85);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
+    }
+    .drawer.open{ display:block; }
+    .drawer-header{
+      position:sticky; top:0;
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      padding:12px 14px;
+      background: rgba(11,18,32,.92);
+      border-bottom:1px solid var(--border);
+    }
+    .drawer-body{ padding:12px 14px; }
+    .line{
+      display:flex; justify-content:space-between; gap:12px;
+      padding:10px 0;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .line:last-child{ border-bottom:0; }
+    .qty{
+      display:flex; gap:8px; align-items:center;
+    }
+    .qty button{ padding:6px 10px; border-radius:10px; }
+
+    .footer{
+      margin-top:24px;
+      border-top:1px solid var(--border);
+      color:var(--muted);
+      padding:18px 0 30px;
+      font-size:14px;
+    }
+
+    @media (max-width: 980px){
+      .hero-grid{ grid-template-columns: 1fr; }
+      .grid{ grid-template-columns: repeat(2, 1fr); }
+      h1{ font-size:34px; }
+    }
+    @media (max-width: 520px){
+      .grid{ grid-template-columns: 1fr; }
+      .actions{ width:100%; justify-content:stretch; }
+      .btn{ flex:0 0 auto; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="#">
+        <span class="logo" aria-hidden="true"></span>
+        <span id="shopName">Můj e‑shop</span>
+      </a>
+
+      <nav class="nav" aria-label="Hlavní navigace">
+        <a href="#kategorie">Kategorie</a>
+        <a href="#produkty">Produkty</a>
+        <a href="#kontakt">Kontakt</a>
+      </nav>
+
+      <div class="actions">
+        <label class="search" aria-label="Vyhledávání">
+          <span class="muted">⌕</span>
+          <input id="q" type="search" placeholder="Hledat produkty…" autocomplete="off" />
+        </label>
+        <button class="btn" type="button">Přihlásit</button>
+        <button class="btn primary" id="cartBtn" type="button" aria-haspopup="dialog" aria-controls="cartDrawer">
+          Košík (<span id="cartCount">0</span>)
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="hero-grid">
+        <div class="panel hero-main">
+          <div class="kicker">Čisté HTML+CSS • Data v JSON • Render přes JS</div>
+          <h1>Úvodní stránka e‑shopu</h1>
+          <p class="lead">
+            Produkty se nenačítají „natvrdo“ v HTML – jsou v JSON a stránka je vykreslí pomocí JavaScriptu.
+            Snadno pak vyměníš data za API nebo CMS.
+          </p>
+          <div class="hero-cta">
+            <a class="btn primary" href="#produkty">Zobrazit produkty</a>
+            <a class="btn" href="#kategorie">Procházet kategorie</a>
+          </div>
+          <p class="hint" style="margin-top:12px;">
+            Tip: Otevři DevTools → Console a uvidíš stav (state) a co se renderuje.
+          </p>
+        </div>
+
+        <aside class="panel hero-side" aria-label="Info panel">
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <div class="badge"><span>✓ Doprava od 69 Kč</span><span class="muted">CZ</span></div>
+            <div class="badge"><span>✓ 30 dní na vrácení</span><span class="muted">OK</span></div>
+            <div class="badge"><span>✓ Platba kartou</span><span class="muted">VISA/MC</span></div>
+            <div class="badge"><span>✓ Podpora Po–Pá</span><span class="muted">9–17</span></div>
+          </div>
+
+          <div class="card" style="margin-top:14px;">
+            <div class="muted small">Akce týdne</div>
+            <div class="title" style="margin-top:6px;">-20 % na vybrané produkty</div>
+            <div class="muted small" style="margin-top:6px;">Kód: <strong>START20</strong></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="kategorie">
+      <h2>
+        Kategorie
+        <span class="hint">kliknutím filtruješ produkty</span>
+      </h2>
+      <div id="categoryGrid" class="grid" role="list" aria-label="Seznam kategorií"></div>
+      <div id="categoryEmpty" class="empty" style="display:none;">Žádné kategorie.</div>
+    </section>
+
+    <section class="section" id="produkty">
+      <h2>
+        Produkty
+        <span class="subtools">
+          <select id="sort" class="select" aria-label="Řazení">
+            <option value="popular">Řazení: Populární</option>
+            <option value="priceAsc">Cena: od nejlevnějšího</option>
+            <option value="priceDesc">Cena: od nejdražšího</option>
+            <option value="nameAsc">Název: A→Z</option>
+          </select>
+          <button class="btn" id="resetBtn" type="button">Reset filtrů</button>
+        </span>
+      </h2>
+
+      <div class="hint" id="activeFilters" style="margin-bottom:10px;"></div>
+      <div id="productGrid" class="grid" role="list" aria-label="Seznam produktů"></div>
+      <div id="productEmpty" class="empty" style="display:none;">Nic nenalezeno. Zkus změnit filtr nebo dotaz.</div>
+    </section>
+
+    <section class="section" id="kontakt">
+      <h2>Kontakt</h2>
+      <div class="panel" style="padding:16px;">
+        <div class="muted small">E‑mail</div>
+        <div class="title">podpora@mojeshop.cz</div>
+        <div class="muted small" style="margin-top:10px;">Telefon</div>
+        <div class="title">+420 777 123 456</div>
+        <div class="muted small" style="margin-top:10px;">Adresa</div>
+        <div class="muted">Praha, CZ</div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      © <span id="year"></span> <span id="shopNameFooter">Můj e‑shop</span> • HTML+CSS+JS demo
+    </footer>
+  </main>
+
+  <!-- Jednoduchý košík jako „drawer“ -->
+  <aside id="cartDrawer" class="drawer" role="dialog" aria-label="Košík">
+    <div class="drawer-header">
+      <div class="title">Košík</div>
+      <div style="display:flex; gap:10px; align-items:center;">
+        <div class="muted small">Položky: <strong id="cartCount2">0</strong></div>
+        <button class="btn" id="closeCartBtn" type="button">Zavřít</button>
+      </div>
+    </div>
+    <div class="drawer-body">
+      <div id="cartLines"></div>
+      <div style="margin-top:12px; display:flex; justify-content:space-between; align-items:center;">
+        <div class="muted">Celkem</div>
+        <div class="title" id="cartTotal">0 Kč</div>
+      </div>
+      <div style="margin-top:12px; display:flex; gap:10px;">
+        <button class="btn danger" id="clearCartBtn" type="button">Vyprázdnit</button>
+        <button class="btn primary" type="button" style="flex:1;">Pokračovat</button>
+      </div>
+      <div class="hint" style="margin-top:10px;">
+        Košík je jen ukázka (state v paměti). Snadno to napojíš na localStorage nebo backend.
+      </div>
+    </div>
+  </aside>
+
+  <script>
+    /**
+     * DATA (JSON-like): tady později vyměníš za fetch("/api/products") apod.
+     */
+    const SHOP = {
+      name: "Můj e‑shop",
+      currency: "CZK",
+      locale: "cs-CZ"
+    };
+
+    const CATEGORIES = [
+      { id: "new", name: "Novinky", description: "Nejnovější kousky" },
+      { id: "sale", name: "Výprodej", description: "Slevy a akce" },
+      { id: "accessories", name: "Doplňky", description: "Praktické věci" },
+      { id: "gifts", name: "Dárky", description: "Tipy na dárky" }
+    ];
+
+    const PRODUCTS = [
+      { id: "p1", name: "Produkt 1", categoryId: "new", price: 499, popularity: 95, tags: ["nové", "top"] },
+      { id: "p2", name: "Produkt 2", categoryId: "accessories", price: 799, popularity: 88, tags: ["doplněk"] },
+      { id: "p3", name: "Produkt 3", categoryId: "sale", price: 349, popularity: 90, tags: ["sleva"] },
+      { id: "p4", name: "Produkt 4", categoryId: "gifts", price: 1199, popularity: 80, tags: ["dárek"] },
+      { id: "p5", name: "Produkt 5", categoryId: "new", price: 999, popularity: 85, tags: ["nové"] },
+      { id: "p6", name: "Produkt 6", categoryId: "accessories", price: 259, popularity: 70, tags: ["praktické"] },
+      { id: "p7", name: "Produkt 7", categoryId: "sale", price: 699, popularity: 77, tags: ["sleva", "limitka"] },
+      { id: "p8", name: "Produkt 8", categoryId: "gifts", price: 449, popularity: 73, tags: ["dárek"] }
+    ];
+
+    /**
+     * STATE: připravené pro JS (filtry, sort, košík).
+     */
+    const state = {
+      q: "",
+      categoryId: null,
+      sort: "popular",
+      cart: new Map() // productId -> qty
+    };
+
+    const $ = (sel) => document.querySelector(sel);
+
+    function formatMoney(value) {
+      return new Intl.NumberFormat(SHOP.locale, { style: "currency", currency: SHOP.currency }).format(value);
+    }
+
+    function setShopName() {
+      $("#shopName").textContent = SHOP.name;
+      $("#shopNameFooter").textContent = SHOP.name;
+      document.title = `${SHOP.name} – úvod`;
+    }
+
+    function renderCategories() {
+      const grid = $("#categoryGrid");
+      grid.innerHTML = "";
+
+      // "Vše" pseudo-kategorie
+      const allCard = document.createElement("a");
+      allCard.href = "#produkty";
+      allCard.className = "card";
+      allCard.role = "listitem";
+      allCard.innerHTML = `
+        <div class="thumb" aria-hidden="true"></div>
+        <div class="meta">
+          <div>
+            <div class="title">Vše</div>
+            <div class="muted small">Zobrazit všechny produkty</div>
+          </div>
+          <div class="muted">→</div>
+        </div>
+      `;
+      allCard.addEventListener("click", (e) => {
+        e.preventDefault();
+        state.categoryId = null;
+        syncUI();
+        location.hash = "#produkty";
+      });
+      grid.appendChild(allCard);
+
+      for (const c of CATEGORIES) {
+        const card = document.createElement("a");
+        card.href = "#produkty";
+        card.className = "card";
+        card.role = "listitem";
+        card.innerHTML = `
+          <div class="thumb" aria-hidden="true"></div>
+          <div class="meta">
+            <div>
+              <div class="title">${escapeHtml(c.name)}</div>
+              <div class="muted small">${escapeHtml(c.description || "")}</div>
+            </div>
+            <div class="muted">→</div>
+          </div>
+        `;
+        card.addEventListener("click", (e) => {
+          e.preventDefault();
+          state.categoryId = c.id;
+          syncUI();
+          location.hash = "#produkty";
+        });
+        grid.appendChild(card);
+      }
+
+      $("#categoryEmpty").style.display = (CATEGORIES.length ? "none" : "block");
+    }
+
+    function getFilteredProducts() {
+      const q = state.q.trim().toLowerCase();
+      let list = PRODUCTS.slice();
+
+      if (state.categoryId) {
+        list = list.filter(p => p.categoryId === state.categoryId);
+      }
+      if (q) {
+        list = list.filter(p =>
+          p.name.toLowerCase().includes(q) ||
+          (p.tags || []).some(t => String(t).toLowerCase().includes(q))
+        );
+      }
+
+      // sort
+      switch (state.sort) {
+        case "priceAsc":
+          list.sort((a,b) => a.price - b.price);
+          break;
+        case "priceDesc":
+          list.sort((a,b) => b.price - a.price);
+          break;
+        case "nameAsc":
+          list.sort((a,b) => a.name.localeCompare(b.name, "cs"));
+          break;
+        case "popular":
+        default:
+          list.sort((a,b) => (b.popularity ?? 0) - (a.popularity ?? 0));
+          break;
+      }
+
+      return list;
+    }
+
+    function renderProducts() {
+      const grid = $("#productGrid");
+      const items = getFilteredProducts();
+      grid.innerHTML = "";
+
+      for (const p of items) {
+        const cat = CATEGORIES.find(c => c.id === p.categoryId);
+        const card = document.createElement("article");
+        card.className = "card";
+        card.role = "listitem";
+
+        const tags = (p.tags || []).slice(0, 3).map(t => `<span class="tag">${escapeHtml(t)}</span>`).join("");
+
+        card.innerHTML = `
+          <div class="thumb" aria-hidden="true"></div>
+          <div class="meta">
+            <div>
+              <div class="title">${escapeHtml(p.name)}</div>
+              <div class="muted small">${escapeHtml(cat?.name || "Bez kategorie")}</div>
+            </div>
+            <div class="price">${formatMoney(p.price)}</div>
+          </div>
+          <div class="tags">${tags}</div>
+          <div class="card-actions">
+            <button class="btn" type="button" data-action="detail" data-id="${p.id}">Detail</button>
+            <button class="btn primary" type="button" data-action="add" data-id="${p.id}">Do košíku</button>
+          </div>
+        `;
+
+        card.addEventListener("click", (e) => {
+          const btn = e.target.closest("button");
+          if (!btn) return;
+          const id = btn.getAttribute("data-id");
+          const action = btn.getAttribute("data-action");
+
+          if (action === "add") {
+            addToCart(id, 1);
+            openCart();
+          } else if (action === "detail") {
+            // Placeholder: připraveno pro budoucí routování / produktovou stránku
+            const prod = PRODUCTS.find(x => x.id === id);
+            alert(`Detail produktu:\n\n${prod.name}\nCena: ${formatMoney(prod.price)}\n\n(Tady později otevřeš /product/${id})`);
+          }
+        });
+
+        grid.appendChild(card);
+      }
+
+      $("#productEmpty").style.display = (items.length ? "none" : "block");
+    }
+
+    function renderActiveFilters() {
+      const parts = [];
+      if (state.categoryId) {
+        const cat = CATEGORIES.find(c => c.id === state.categoryId);
+        parts.push(`Kategorie: <strong>${escapeHtml(cat?.name || state.categoryId)}</strong>`);
+      }
+      if (state.q.trim()) {
+        parts.push(`Hledání: <strong>${escapeHtml(state.q.trim())}</strong>`);
+      }
+
+      $("#activeFilters").innerHTML = parts.length
+        ? `Aktivní filtry: ${parts.join(" • ")}`
+        : `<span class="muted">Bez filtrů.</span>`;
+    }
+
+    function addToCart(productId, qty) {
+      const current = state.cart.get(productId) || 0;
+      state.cart.set(productId, current + qty);
+      syncCartUI();
+    }
+
+    function changeQty(productId, delta) {
+      const current = state.cart.get(productId) || 0;
+      const next = current + delta;
+      if (next <= 0) state.cart.delete(productId);
+      else state.cart.set(productId, next);
+      syncCartUI();
+    }
+
+    function clearCart() {
+      state.cart.clear();
+      syncCartUI();
+    }
+
+    function cartCount() {
+      let count = 0;
+      for (const qty of state.cart.values()) count += qty;
+      return count;
+    }
+
+    function cartTotal() {
+      let total = 0;
+      for (const [id, qty] of state.cart.entries()) {
+        const p = PRODUCTS.find(x => x.id === id);
+        if (!p) continue;
+        total += p.price * qty;
+      }
+      return total;
+    }
+
+    function syncCartUI() {
+      const count = cartCount();
+      $("#cartCount").textContent = String(count);
+      $("#cartCount2").textContent = String(count);
+
+      const lines = $("#cartLines");
+      lines.innerHTML = "";
+
+      if (count === 0) {
+        lines.innerHTML = `<div class="empty">Košík je prázdný.</div>`;
+      } else {
+        for (const [id, qty] of state.cart.entries()) {
+          const p = PRODUCTS.find(x => x.id === id);
+          if (!p) continue;
+
+          const row = document.createElement("div");
+          row.className = "line";
+          row.innerHTML = `
+            <div style="min-width: 0;">
+              <div class="title" style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escapeHtml(p.name)}</div>
+              <div class="muted small">${formatMoney(p.price)} • <span class="muted small">Mezisoučet:</span> <strong>${formatMoney(p.price * qty)}</strong></div>
+            </div>
+            <div class="qty">
+              <button class="btn" type="button" data-delta="-1" aria-label="Odebrat">−</button>
+              <strong style="min-width:24px; text-align:center;">${qty}</strong>
+              <button class="btn" type="button" data-delta="1" aria-label="Přidat">+</button>
+            </div>
+          `;
+          row.addEventListener("click", (e) => {
+            const btn = e.target.closest("button");
+            if (!btn) return;
+            const delta = Number(btn.getAttribute("data-delta"));
+            changeQty(id, delta);
+          });
+          lines.appendChild(row);
+        }
+      }
+
+      $("#cartTotal").textContent = formatMoney(cartTotal());
+
+      // debug
+      console.log("[cart]", Object.fromEntries(state.cart.entries()), "count=", count, "total=", cartTotal());
+    }
+
+    function openCart() { $("#cartDrawer").classList.add("open"); }
+    function closeCart() { $("#cartDrawer").classList.remove("open"); }
+
+    function syncUI() {
+      renderActiveFilters();
+      renderProducts();
+      syncCartUI();
+      console.log("[state]", { ...state, cart: Object.fromEntries(state.cart.entries()) });
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function wireEvents() {
+      $("#q").addEventListener("input", (e) => {
+        state.q = e.target.value;
+        syncUI();
+      });
+
+      $("#sort").addEventListener("change", (e) => {
+        state.sort = e.target.value;
+        syncUI();
+      });
+
+      $("#resetBtn").addEventListener("click", () => {
+        state.q = "";
+        state.categoryId = null;
+        state.sort = "popular";
+        $("#q").value = "";
+        $("#sort").value = "popular";
+        syncUI();
+      });
+
+      $("#cartBtn").addEventListener("click", () => {
+        const open = $("#cartDrawer").classList.contains("open");
+        if (open) closeCart(); else openCart();
+      });
+
+      $("#closeCartBtn").addEventListener("click", closeCart);
+      $("#clearCartBtn").addEventListener("click", clearCart);
+
+      // zavření drawer klávesou ESC
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeCart();
+      });
+    }
+
+    // INIT
+    $("#year").textContent = new Date().getFullYear();
+    setShopName();
+    renderCategories();
+    wireEvents();
+    syncUI();
+  </script>
+</body>
+</html>
