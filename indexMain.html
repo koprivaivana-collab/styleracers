@@ -1,22 +1,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Style Racers</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <title>S • T • Y • L • E   R • A • C • E • R • S</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <header>
-    <h1>Style Racers</h1>
-      <div class="cart">🛒 Cart (0)</div>
-  </header>
+<header>
+  <h1>S • T • Y • L • E   ★    R • A • C • E • R • S</h1>
 
-  <nav>
-    <a href="#">Home</a>
-    <a href="#">Products</a>
-    <a href="#">About</a>
-    <a href="#">Contact</a>
-  </nav>
+  <div class="burger" id="burger" onclick="toggleMenu()">
+    ☰
+  </div>
+
+  <div class="cart">🛒 Cart (0)</div>
+</header>
+
+<nav id="menu">
+  <a href="#" class="nav-icon">
+  <i class="fas fa-house"></i> Home</a>
+  <a href="#" class="nav-icon">
+    <i class="fas fa-newspaper"></i> Novinky
+  </a>
+  <a href="#" class="nav-icon">
+    <i class="fas fa-tags"></i> kupóny
+  </a>
+  <a href="#" class="nav-icon">
+    <i class="fas fa-star"></i> recenze
+  </a>
+  <a href="#" class="nav-icon">
+    <i class="fas fa-info-circle"></i> o nás
+  </a>
+  <a href="#" class="nav-icon">
+    <i class="fas fa-phone"></i> kontakty
+  </a>
+</nav>
 
   <section class="products">
 
@@ -46,6 +65,10 @@
   <footer>
     <p>© 2026 MyShop. All rights reserved.</p>
   </footer>
+
+<script src="script.js"></script>
+</body>
+</html>
 
 </body>
 </html>

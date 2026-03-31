@@ -2,16 +2,19 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: Arial, sans-serif;
+  font-family: 'Courier New', monospace;
 }
 
 /* Header */
 header {
-    background-image: ;
+    background-image: url('Main-images/360_F_745188744_KMNjnw02jUJVS2vCD3VRkDiIiiug3s64.jpg'); 
   position: relative;
   text-align: center;
-  padding: 15px 40px;
+  padding: 60px 40px;
   color: white;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .cart {
@@ -21,17 +24,43 @@ header {
   transform: translateY(-50%);
 }
 
+/* Burger icon */
+.burger {
+  position: fixed;
+  left: 20px;
+  top: 20px;
+  font-size: 26px;
+  cursor: pointer;
+  display: block;
+  z-index: 1000;
+  color: white;
+}
+
 /* Navigation */
 nav {
-  background: #b46c6c;
-  padding: 10px 40px;
+  padding-top: 80px;
+  position: fixed;
+  top: 0;
+  left: -250px;
+  width: 250px;
+  height: 100%;
+  background: black;
+  padding: -5px;
+  display: flex;
+  flex-direction: column;
+  transition: 0.3s;
+  z-index: 900;
 }
 
 nav a {
   color: white;
   text-decoration: none;
-  margin-right: 20px;
+  padding: 10px 20px;
 }
+
+  nav.active {
+  left: 0;
+  }
 
 nav a:hover {
   text-decoration: underline;
