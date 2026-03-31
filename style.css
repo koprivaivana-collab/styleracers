@@ -5,22 +5,27 @@
   font-family: 'Courier New', monospace;
 }
 
+body {
+  background: rgb(43, 1, 1);
+}
+
 /* Header */
 header {
-    background-image: url('Main-images/360_F_745188744_KMNjnw02jUJVS2vCD3VRkDiIiiug3s64.jpg'); 
-  position: relative;
+  background-image: url('Main-images/360_F_745188744_KMNjnw02jUJVS2vCD3VRkDiIiiug3s64.jpg'); 
   text-align: center;
   padding: 60px 40px;
   color: white;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  margin: -10px -10px;
 }
 
 .cart {
+  color: white;
   position: absolute;
   right: 40px;
-  top: 50%;
+  top: 24%;
   transform: translateY(-50%);
 }
 
@@ -33,10 +38,18 @@ header {
   cursor: pointer;
   display: block;
   z-index: 1000;
-  color: white;
+  color: black;
 }
 
 /* Navigation */
+.topnav {
+  background: black;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: center;
+  margin: 5px -10px;
+}
+  
 nav {
   padding-top: 80px;
   position: fixed;
@@ -66,6 +79,14 @@ nav a:hover {
   text-decoration: underline;
 }
 
+.filter-menu {
+  display: flex;
+  background: #222;
+  justify-content: center;
+  gap: 20px;
+  margin: -5px -10px;
+}
+
 /* Product Section */
 .products {
   display: grid;
@@ -81,6 +102,7 @@ nav a:hover {
   text-align: center;
   border-radius: 8px;
   transition: 0.3s;
+  color: white;
 }
 
 .product:hover {
