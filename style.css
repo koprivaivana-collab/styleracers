@@ -133,5 +133,27 @@ footer {
   color: white;
   text-align: center;
   padding: 15px;
-  margin-top: 40px;
+  
+}
+
+.textaboutus {
+  color: white;
+  max-width: 600px;
+  margin: 40px auto;
+  background: #000000;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.product.page {
+  max-width: 600px;
+  margin: 40px auto;
+  background: #000000;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.productdetails {
+  text-align: left;
+  gap: 20px;
 }
