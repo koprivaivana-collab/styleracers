@@ -167,10 +167,30 @@ footer {
   object-fit: cover;
 }
 
-.imagesaboutus:nth-child(1) {
+.container-images {
+  display: flex;
+  gap: 20px;
+  justify-content: center; /* zarovnání na střed */
+  align-items: center;
+}
+
+.imagesaboutus {
+  width: 200px; /* kontrola velikosti */
+}
+
+.imagesaboutus img {
+  width: 100%;
+  height: auto;
+}
+
+.imagesaboutus:nth-of-type(1) {
   transform: rotate(30deg);
 }
 
-.imagesaboutus:nth-child(2) {
+.imagesaboutus:nth-of-type(2) {
+  transform: rotate(0deg);
+}
+
+.imagesaboutus:nth-of-type(3) {
   transform: rotate(-30deg);
 }
