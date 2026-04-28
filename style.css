@@ -157,3 +157,20 @@ footer {
   text-align: left;
   gap: 20px;
 }
+
+.imagesaboutus {
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  margin: 40px 15px;
+  padding: 40px;
+  object-fit: cover;
+}
+
+.imagesaboutus:nth-child(1) {
+  transform: rotate(30deg);
+}
+
+.imagesaboutus:nth-child(2) {
+  transform: rotate(-30deg);
+}
