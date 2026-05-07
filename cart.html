@@ -1,0 +1,37 @@
+<div id="cart-container">
+    <h2>Váš nákupní košík</h2>
+    <div id="cart-items">
+        </div>
+    <div id="cart-total">
+        <strong>Celkem: <span id="total-price">0</span> Kč</strong>
+    </div>
+    <button onclick="clearCart()">Vyprázdnit košík</button>
+</div>
+
+<script>
+function renderCart() {
+    const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+    const container = document.getElementById('cart-items');
+    let total = 0;
+
+    container.innerHTML = '';
+
+    cartItems.forEach(item => {
+        total += item.price * item.quantity;
+        container.innerHTML += `
+            <div class="cart-item">
+                <p>${item.name} - ${item.price} Kč (x${item.quantity})</p>
+            </div>
+        `;
+    });
+
+    document.getElementById('total-price').innerText = total;
+}
+
+function clearCart() {
+    localStorage.removeItem('cart');
+    renderCart();
+}
+
+renderCart();
+</script>

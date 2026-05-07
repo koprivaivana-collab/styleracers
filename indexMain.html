@@ -10,11 +10,17 @@
 <header>
   <h1>S • T • Y • L • E   ★    R • A • C • E • R • S</h1>
 
+  <div class="header-controls">
+    <a href="cart.html" class="cart-button" id="cart-status">
+      <i class="fas fa-shopping-cart"></i>
+      <span class="cart-text">Košík</span>
+      <span class="cart-count">0</span>
+    </a></div>
+
   <div class="burger" id="burger" onclick="toggleMenu()">
     ☰
   </div>
 
-  <div class="cart"><i class="fas fa-shopping-cart"></i> Cart (0)</div>
 </header>
 
 <div class="topnav">
@@ -45,8 +51,8 @@
   <h3>Kategorie</h3>
   <ul>
     <li><button onclick="filterProduct('vse')">Vše</button></li>
-    <li><button onclick="filterProduct('elektronika')">Elektronika</button></li>
-    <li><button onclick="filterProduct('obleceni')">Oblečení</button></li>
+    <li><button onclick="filterProduct('elektronika')">volanty</button></li>
+    <li><button onclick="filterProduct('obleceni')">sedačky</button></li>
   </ul>
 
   <h3>Cena</h3>
@@ -57,29 +63,29 @@
   <section class="products">
 
     <div class="product">
-      <a href="product1.html">
-      <img src="Main-images/3-ramenny-volant-sparco-r345-350mm-semis-63mm.jpg" alt="Product">
+      <a href="product1.html" data-id="1" data-name="Sparco R345 Volant" data-price="5226">
+      <img src="Product-images/3-ramenny-volant-sparco-r345-350mm-semis-63mm.jpg" alt="Product">
       <h3>3 ramenný volant Sparco R345, 350mm semiš, 63mm</h3>
       <p>$5 226 Kč</p>
-      <button>Do košíku</button>
+      <button class="add-to-cart">Do košíku</button>
       </a>
     </div>
 
     <div class="product">
-      <a href="product2.html">
+      <a href="product2.html" data-id="2" data-name="Product 2" data-price="29.99">
       <img src="https://via.placeholder.com/200" alt="Product">
       <h3>Product 2</h3>
       <p>$29.99</p>
-      <button>Do košíku</button>
+      <button class="add-to-cart">Do košíku</button>
       </a>
     </div>
 
     <div class="product">
-      <a href="product3.html">
+      <a href="product3.html" data-id="3" data-name="Řadicí páka MOMO ULTRA černá" data-price="2924 ">
       <img src="Product-images/radici-paka-momo-ultra-cerna.jpg" alt="Product">
       <h3>Řadicí páka MOMO ULTRA černá</h3>
       <p>2 924 Kč</p>
-      <button>Do košíku</button>
+      <button class="add-to-cart">Do košíku</button>
       </a>
     </div>
 
