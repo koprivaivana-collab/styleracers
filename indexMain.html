@@ -24,7 +24,7 @@
 </header>
 
 <div class="topnav">
-  <input type="text" placeholder="Search..">
+  <input type="text" id="searchInput" placeholder="Search.." onkeyup="filterEverything()">
 </div>
 
 <nav id="menu">
@@ -51,8 +51,9 @@
   <h3>Kategorie</h3>
   <ul>
     <li><button onclick="filterProduct('vse')">Vše</button></li>
-    <li><button onclick="filterProduct('elektronika')">volanty</button></li>
-    <li><button onclick="filterProduct('obleceni')">sedačky</button></li>
+    <li><button onclick="filterProduct('volanty')">volanty</button></li>
+    <li><button onclick="filterProduct('sedačky')">sedačky</button></li>
+    <li><button onclick="filterProduct('řadicí páky')">řadicí páky</button></li>
   </ul>
 
   <h3>Cena</h3>
@@ -63,7 +64,7 @@
   <section class="products">
 
     <div class="product">
-      <a href="product1.html" data-id="1" data-name="Sparco R345 Volant" data-price="5226">
+      <a href="product1.html" data-id="1" data-name="Sparco R345 Volant" data-price="5226" data-category="volanty">
       <img src="Product-images/3-ramenny-volant-sparco-r345-350mm-semis-63mm.jpg" alt="Product">
       <h3>3 ramenný volant Sparco R345, 350mm semiš, 63mm</h3>
       <p>$5 226 Kč</p>
@@ -72,7 +73,7 @@
     </div>
 
     <div class="product">
-      <a href="product2.html" data-id="2" data-name="Product 2" data-price="29.99">
+      <a href="product2.html" data-id="2" data-name="Product 2" data-price="29.99" data-category="sedačky">
       <img src="https://via.placeholder.com/200" alt="Product">
       <h3>Product 2</h3>
       <p>$29.99</p>
@@ -81,7 +82,7 @@
     </div>
 
     <div class="product">
-      <a href="product3.html" data-id="3" data-name="Řadicí páka MOMO ULTRA černá" data-price="2924 ">
+      <a href="product3.html" data-id="3" data-name="Řadicí páka MOMO ULTRA černá" data-price="2924 " data-category="řadicí páky">
       <img src="Product-images/radici-paka-momo-ultra-cerna.jpg" alt="Product">
       <h3>Řadicí páka MOMO ULTRA černá</h3>
       <p>2 924 Kč</p>

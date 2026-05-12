@@ -1,37 +1,112 @@
-<div id="cart-container">
-    <h2>Váš nákupní košík</h2>
-    <div id="cart-items">
-        </div>
-    <div id="cart-total">
-        <strong>Celkem: <span id="total-price">0</span> Kč</strong>
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <title>Košík | Style Racers</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h1>S • T • Y • L • E   ★    R • A • C • E • R • S</h1>
+  <div class="header-controls">
+    <a href="indexMain.html" class="cart-button">
+      <i class="fas fa-arrow-left"></i> Zpět k nákupu
+    </a>
+  </div>
+</header>
+
+<div class="cart-wrapper">
+  <h2><i class="fas fa-shopping-cart"></i> Váš nákupní košík</h2>
+  
+  <div id="cart-content"></div>
+
+  <div class="cart-summary" id="cart-summary" style="display: none;">
+    <strong>Celkem k úhradě: <span id="total-price-display"></span></strong>
+    
+    <div class="action-btns">
+      <button onclick="clearCart()" style="background: #444;">Vyprázdnit košík</button>
+      <button onclick="checkout()" style="background: red;">Pokračovat k platbě</button>
     </div>
-    <button onclick="clearCart()">Vyprázdnit košík</button>
+  </div>
 </div>
+
+<footer>
+  <p>© 2026 StyleRacers. All rights reserved.</p>
+</footer>
 
 <script>
 function renderCart() {
     const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
-    const container = document.getElementById('cart-items');
+    const container = document.getElementById('cart-content');
+    const summary = document.getElementById('cart-summary');
+    const totalPriceDisplay = document.getElementById('total-price-display');
     let total = 0;
 
-    container.innerHTML = '';
+    if (cartItems.length === 0) {
+        container.innerHTML = `
+            <div class="empty-msg">
+                <p>Váš košík je zatím prázdný.</p>
+                <a href="indexMain.html">>>> Začít nakupovat <<<</a>
+            </div>`;
+        summary.style.display = 'none';
+        return;
+    }
 
-    cartItems.forEach(item => {
-        total += item.price * item.quantity;
-        container.innerHTML += `
-            <div class="cart-item">
-                <p>${item.name} - ${item.price} Kč (x${item.quantity})</p>
-            </div>
-        `;
+    summary.style.display = 'block';
+    
+    // Tady vytváříme tabulku s třídou .cart-table, kterou máte v CSS
+    let html = `
+        <table class="cart-table">
+            <thead>
+                <tr>
+                    <th>Produkt</th>
+                    <th>Množství</th>
+                    <th>Cena</th>
+                    <th>Akce</th>
+                </tr>
+            </thead>
+            <tbody>`;
+
+    cartItems.forEach((item, index) => {
+        const itemTotal = item.price * item.quantity;
+        total += itemTotal;
+        html += `
+            <tr>
+                <td>${item.name}</td>
+                <td>${item.quantity}x</td>
+                <td>${itemTotal.toLocaleString()} Kč</td>
+                <td><button class="remove-btn" onclick="removeItem(${index})">Odstranit</button></td>
+            </tr>`;
     });
 
-    document.getElementById('total-price').innerText = total;
+    html += `</tbody></table>`;
+    container.innerHTML = html;
+
+    // Tady vkládáme výslednou cenu s třídou pro červenou barvu
+    totalPriceDisplay.innerHTML = `<span class="total-price-value">${total.toLocaleString()} Kč</span>`;
 }
 
-function clearCart() {
-    localStorage.removeItem('cart');
+function removeItem(index) {
+    let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+    cartItems.splice(index, 1);
+    localStorage.setItem('cart', JSON.stringify(cartItems));
     renderCart();
 }
 
+function clearCart() {
+    if(confirm('Opravdu chcete vyprázdnit košík?')) {
+        localStorage.removeItem('cart');
+        renderCart();
+    }
+}
+
+function checkout() {
+    alert('Děkujeme za objednávku! (Demo)');
+}
+
+// Spuštění při načtení
 renderCart();
 </script>
+</body>
+</html>
