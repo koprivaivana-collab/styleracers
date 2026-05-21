@@ -10,6 +10,12 @@
 <header>
   <h1>S • T • Y • L • E   ★    R • A • C • E • R • S</h1>
 
+
+</header>
+
+<div class="topnav">
+  <input type="text" id="searchInput" placeholder="Search.." onkeyup="filterEverything()">
+  
   <div class="header-controls">
     <a href="cart.html" class="cart-button" id="cart-status">
       <i class="fas fa-shopping-cart"></i>
@@ -21,10 +27,6 @@
     ☰
   </div>
 
-</header>
-
-<div class="topnav">
-  <input type="text" id="searchInput" placeholder="Search.." onkeyup="filterEverything()">
 </div>
 
 <nav id="menu">
@@ -40,7 +42,7 @@
     <i class="fas fa-star"></i> recenze
   </a>
   <a href="indexAboutUs.html" class="btn">
-  
+    <i class="fas fa-info-circle"></i> o nás
   </a>
   <a href="#" class="nav-icon">
     <i class="fas fa-phone"></i> kontakty
@@ -61,36 +63,34 @@
   <p>Do: <span id="priceValue">100000</span> Kč</p>
 </div>
 
-  <section class="products">
+<section class="products">
 
-    <div class="product">
-      <a href="product1.html" data-id="1" data-name="Sparco R345 Volant" data-price="5226" data-category="volanty">
+  <div class="product" data-id="1" data-name="Sparco R345 Volant" data-price="5226" data-category="volanty">
+    <a href="product1.html">
       <img src="Product-images/3-ramenny-volant-sparco-r345-350mm-semis-63mm.jpg" alt="Product">
       <h3>3 ramenný volant Sparco R345, 350mm semiš, 63mm</h3>
-      <p>$5 226 Kč</p>
-      <button class="add-to-cart">Do košíku</button>
-      </a>
-    </div>
+      <p>5 226 Kč</p> </a>
+    <button class="add-to-cart">Do košíku</button> </div>
 
-    <div class="product">
-      <a href="product2.html" data-id="2" data-name="Product 2" data-price="29.99" data-category="sedačky">
+  <div class="product" data-id="2" data-name="Závodní sedačka" data-price="7500" data-category="sedačky">
+    <a href="product2.html">
       <img src="https://via.placeholder.com/200" alt="Product">
-      <h3>Product 2</h3>
-      <p>$29.99</p>
-      <button class="add-to-cart">Do košíku</button>
-      </a>
-    </div>
+      <h3>Závodní sedačka</h3>
+      <p>7 500 Kč</p>
+    </a>
+    <button class="add-to-cart">Do košíku</button>
+  </div>
 
-    <div class="product">
-      <a href="product3.html" data-id="3" data-name="Řadicí páka MOMO ULTRA černá" data-price="2924 " data-category="řadicí páky">
+  <div class="product" data-id="3" data-name="Řadicí páka MOMO ULTRA černá" data-price="2924" data-category="řadicí páky">
+    <a href="product3.html">
       <img src="Product-images/radici-paka-momo-ultra-cerna.jpg" alt="Product">
       <h3>Řadicí páka MOMO ULTRA černá</h3>
       <p>2 924 Kč</p>
-      <button class="add-to-cart">Do košíku</button>
-      </a>
-    </div>
+    </a>
+    <button class="add-to-cart">Do košíku</button>
+  </div>
 
-  </section>
+</section>
 
   <footer>
     <p>© 2026 StyleRacers. All rights reserved.</p>
