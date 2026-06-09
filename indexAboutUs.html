@@ -12,8 +12,21 @@
   <h1>O nás</h1>
 </header>
 
+<div class="topnav">
+  <input type="text" id="searchInput" placeholder="Search.." onkeyup="filterEverything()" onclick="window.location.href='indexMain.html';">
 
+  <div class="header-controls">
+    <a href="cart.html" class="cart-button" id="cart-status">
+      <i class="fas fa-shopping-cart"></i>
+      <span class="cart-text">Košík</span>
+      <span class="cart-count">0</span>
+    </a>
+  </div>
 
+  <div class="burger" id="burger" onclick="toggleMenu()">
+    ☰
+  </div>
+</div>
 
 
 <div class="textaboutus">

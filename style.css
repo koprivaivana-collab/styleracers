@@ -8,8 +8,8 @@
 body {
   background: rgb(43, 1, 1);
   flex-direction: column;
-    min-height: 100vh; 
-    margin: 0;
+  min-height: 100vh; 
+  margin: 0;
 }
 
 section.products {
@@ -38,7 +38,7 @@ header {
   margin-left: auto;
   margin-right: 10px;
   display: flex;
-align-items: center;
+  align-items: center;
   gap: 8px;
   background: #222;
   color: white;
@@ -77,12 +77,11 @@ align-items: center;
 }
   
 nav {
-  position: fixed;
-  padding-top: 80px;
-  top: 249px;
-  left: -250px;
+  position: absolute; 
+  top: 240px;         
+  left: -260px;       
   width: 250px;
-  height: 50%;
+  height: auto;       
   background: black;
   padding: -5px;
   display: flex;
@@ -98,9 +97,9 @@ nav a {
   padding: 10px 20px;
 }
 
-  nav.active {
-  left: 0;
-  }
+nav.active {
+  left: -10px;       
+}
 
 nav a:hover {
   text-decoration: underline;
@@ -109,9 +108,9 @@ nav a:hover {
 .filter-menu {
   color: white;
   border-bottom: #222 2px solid;
-    flex-direction: column; 
-    padding: 20px;
-    align-items: center;
+  flex-direction: column; 
+  padding: 20px;
+  align-items: center;
 }
 
 .filter-menu ul {
@@ -208,12 +207,12 @@ footer {
 .container-images {
   display: flex;
   gap: 20px;
-  justify-content: center; /* zarovnání na střed */
+  justify-content: center; 
   align-items: center;
 }
 
 .imagesaboutus {
-  width: 200px; /* kontrola velikosti */
+  width: 200px; 
 }
 
 .imagesaboutus img {
