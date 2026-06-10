@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<title>Hamburger menu</title>
+
+<style>
+body {
+    color: #444;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Horní lišta */
+.navbar {
+    background: #333;
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Ikona */
+.menu-icon {
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* Menu */
+.menu {
+    display: none;
+    flex-direction: column;
+    background: #444;
+}
+
+.menu a {
+    color: white;
+    padding: 12px;
+    text-decoration: none;
+    border-top: 1px solid #555;
+}
+
+.menu a:hover {
+    background: #555;
+}
+</style>
+</head>
+
+<body>
+
+<div class="navbar">
+    <div>Moje stránka</div>
+    <div class="menu-icon" onclick="toggleMenu()">☰</div>
+</div>
+
+<div class="menu" id="menu">
+    <a href="index.html" onclick="closeMenu()">Domů</a>
+    <a href="about.html" onclick="closeMenu()">O nás</a>
+    <a href="services.html" onclick="closeMenu()">Služby</a>
+    <a href="contact.html" onclick="closeMenu()">Kontakt</a>
+</div>
+
+<script>
+function toggleMenu() {
+    const menu = document.getElementById("menu");
+    menu.style.display = (menu.style.display === "flex") ? "none" : "flex";
+}
+
+function closeMenu() {
+    document.getElementById("menu").style.display = "none";
+}
+</script>
+
+</body>
+</html>
